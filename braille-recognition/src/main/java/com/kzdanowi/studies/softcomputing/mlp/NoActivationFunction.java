@@ -14,4 +14,8 @@ public class NoActivationFunction implements ActivationFunction {
 		return output;
 	}
 
+	public Double getPropagationDelta(Double error, Double lastInput, Double lastOutput) {
+		return 0.0;
+	}
+
 }

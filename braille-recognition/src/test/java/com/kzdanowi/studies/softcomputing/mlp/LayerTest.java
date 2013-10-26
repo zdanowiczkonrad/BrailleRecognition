@@ -99,7 +99,6 @@ public class LayerTest {
 		assertDoubleArraysEqualWithDelta(actual, expected, delta(0.000000001));
 	}
 
-	
 	@Test
 	public void shouldOutputAppropriateValuesForAnotherSimpleOutputs() throws InputOrWeightSizeException {
 		/*
@@ -118,7 +117,28 @@ public class LayerTest {
 		// then
 		assertDoubleArraysEqualWithDelta(actual, expected, delta(0.000000001));
 	}
-	
+
+	@Test
+	public void shouldUpdateWeightsBasedOnTheExpectedOutputValue() throws InputOrWeightSizeException {
+		/*
+		 * Layer equivalent to the output layer from example
+		 * http://www.nnwj.de/backpropagation.html
+		 */
+
+		// given
+		when(randomGenerator.nextDouble()).thenReturn(0.35).thenReturn(0.81);
+		Layer layer = new Layer(1, 2, randomGenerator, activationFunction);
+		Double error = -0.643962658;
+
+		// when
+		layer.feedForward(newArrayList(0.634135591, 0.457602059));
+		layer.backPropagate(error);
+		List<List<Double>> weights = layer.getWeights();
+
+		// then
+		assertDoubleArraysEqualWithDelta(weights.get(0), newArrayList(0.326593362, 0.793109407), delta(0.000000001));
+	}
+
 	private void assertDoubleArraysEqualWithDelta(List<Double> actual, List<Double> expected, Delta delta) {
 		if (actual.size() != expected.size()) {
 			fail("Actual has different size than expected");

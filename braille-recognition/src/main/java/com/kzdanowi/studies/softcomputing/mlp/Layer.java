@@ -37,4 +37,25 @@ public class Layer {
 		return output;
 	}
 
+	public void backPropagate(Double error) {
+		for(int i=0;i<perceptrons.size();i++)
+		{
+			perceptrons.get(i).updateWeights(error);
+		}
+	}
+
+	public List<List<Double>> getWeights() {
+		List<List<Double>> weights = new ArrayList<List<Double>>();
+		for (Perceptron each : perceptrons) {
+			weights.add(each.getWeights());
+		}
+		return weights;
+	}
+
+	@Override
+	public String toString() {
+		return "Layer [perceptrons=" + perceptrons + "]";
+	}
+
+
 }

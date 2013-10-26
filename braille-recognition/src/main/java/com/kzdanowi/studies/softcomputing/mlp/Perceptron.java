@@ -14,14 +14,19 @@ import java.util.Random;
  */
 public class Perceptron {
 
+
+	private static final Double LEARNING_RATE = 0.25;
 	private final List<Double> weights;
 	private ActivationFunction activationFunction = new NoActivationFunction();
+	private Double lastOutput = 0.0;
+	private List<Double> lastInputs = new ArrayList<Double>();
 
 	/**
 	 * Test constructor taking weights instead of autogenerating them
 	 */
 	public Perceptron(final List<Double> weights) {
 		this.weights = weights;
+		setlastInputsToZero(weights.size());
 	}
 
 	/**
@@ -31,6 +36,13 @@ public class Perceptron {
 		this.weights = new ArrayList<Double>();
 		for (int i = 0; i < inputSize; i++) {
 			weights.add(randomGenerator.nextDouble());
+		}
+		setlastInputsToZero(inputSize);
+	}
+
+	private void setlastInputsToZero(int inputSize) {
+		for (int i = 0; i < inputSize; i++) {
+			lastInputs.add(0.0);
 		}
 	}
 
@@ -50,12 +62,14 @@ public class Perceptron {
 		assertInputArraysLengthEqual(inputs.size(), weights.size());
 
 		Double output = 0.0;
+		lastInputs = inputs;
 
 		for (int i = 0; i < inputs.size(); i++) {
 			output += inputs.get(i) * weights.get(i);
 		}
 
-		return activationFunction.activate(output);
+		lastOutput = activationFunction.activate(output);
+		return lastOutput;
 	}
 
 	private static void assertInputArraysLengthEqual(int inputsLength, int weightsLength) throws InputOrWeightSizeException {
@@ -69,4 +83,19 @@ public class Perceptron {
 		return weights.size();
 	}
 
+	public List<Double> getWeights() {
+		return weights;
+	}
+
+	public void updateWeights(Double error) {
+		for (int i = 0; i < weights.size(); i++) {
+			Double difference = LEARNING_RATE * activationFunction.getPropagationDelta(error, lastInputs.get(i), lastOutput);
+			weights.set(i, weights.get(i) + difference);
+		}
+	}
+
+	@Override
+	public String toString() {
+		return "Perceptron [weights=" + weights + "]\n";
+	}
 }

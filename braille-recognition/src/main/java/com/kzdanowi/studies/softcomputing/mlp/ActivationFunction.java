@@ -11,4 +11,6 @@ public interface ActivationFunction {
 
 	Double activate(Double input);
 
+	Double getPropagationDelta(Double error, Double lastInput, Double lastOutput);
+
 }
