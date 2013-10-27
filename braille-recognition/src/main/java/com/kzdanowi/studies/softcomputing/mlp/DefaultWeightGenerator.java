@@ -11,13 +11,19 @@ import com.kzdanowi.studies.softcomputing.mlp.core.WeightGenerator;
  */
 public class DefaultWeightGenerator implements WeightGenerator {
 
+	private Double from=-1.0;
+	private Double to=1.0;
 
 	public DefaultWeightGenerator() {
 	}
-	public Double next() {
-		//return random.nextDouble();
-		return (Math.random()*10)-5;
+
+	public DefaultWeightGenerator(Double from, Double to) {
+		this.from=from;
+		this.to=to;
 	}
 
-	
+	public Double next() {
+		return (Math.random() * (to-from)) +from;
+	}
+
 }

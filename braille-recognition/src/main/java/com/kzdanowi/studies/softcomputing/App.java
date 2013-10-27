@@ -25,13 +25,11 @@ import com.kzdanowi.studies.softcomputing.mlp.core.WeightGenerator;
 public class App {
 
 	public static void main(String[] args) {
-		Network network = createNetwork(2, 4, 1);
+		Network network = createNetwork(2, 3, 1);
 		
-		String path = "/networks/net_XOR.bin";
 
 		List<List<Double>> in = generateXorInputs();
 		List<List<Double>> out = generateXorOutputs();
-		//Network network = Network.deserializeNetworkFrom(path);
 
 		TrainRunner runner = new TrainRunner(new Trainer(network));
 
@@ -44,8 +42,9 @@ public class App {
 			System.out.println(network.feedForward(each));
 		}
 
-		System.out.println("Net saved to file " + path);
+		String path = "/networks/net_XOR.bin";
 		Network.serializeNetwork(network, path);
+		System.out.println("Net saved to file " + path);
 
 	}
 
@@ -70,7 +69,7 @@ public class App {
 	private static Network createNetwork(int inputs, int hiddenNeurons, int outputs) {
 		Network network = new Network();
 
-		WeightGenerator randomGenerator = new DefaultWeightGenerator();
+		WeightGenerator randomGenerator = new DefaultWeightGenerator(-5.,5.);
 		SigmoidActivationFunction activationFunction = new SigmoidActivationFunction();
 
 		Double learningRate = 0.25;

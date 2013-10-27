@@ -16,7 +16,7 @@ import com.kzdanowi.studies.softcomputing.mlp.core.WeightGenerator;
 public class DefaultWeightGeneratorTest {
 
 	@Test
-	public void returnOutputsShouldBeInAppropriateRange() {
+	public void returnOutputsShouldBeInDefaultRange() {
 		// given
 		WeightGenerator generator = new DefaultWeightGenerator();
 
@@ -24,8 +24,19 @@ public class DefaultWeightGeneratorTest {
 
 		// then
 		for (int i = 0; i < 100000; i++) {
-			assertThat(generator.next()).isGreaterThanOrEqualTo(-5.).isLessThanOrEqualTo(5);
+			assertThat(generator.next()).isGreaterThanOrEqualTo(-1.).isLessThanOrEqualTo(1);
 		}
 	}
+	@Test
+	public void returnOutputsShouldBeInAppropriateRange() {
+		// given
+		WeightGenerator generator = new DefaultWeightGenerator(-2.42,5.50);
 
+		// when
+
+		// then
+		for (int i = 0; i < 100000; i++) {
+			assertThat(generator.next()).isGreaterThanOrEqualTo(-2.42).isLessThanOrEqualTo(5.50);
+		}
+	}
 }
