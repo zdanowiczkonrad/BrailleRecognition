@@ -11,7 +11,7 @@ import com.kzdanowi.studies.softcomputing.mlp.*;
  * 
  */
 public class App {
-	private static final int INPUT_NEURONS = 10;
+	private static final int INPUT_NEURONS = 4000;
 
 	public static void main(String[] args) {
 		try {
@@ -36,11 +36,12 @@ public class App {
 		network.addLayer(hiddenLayer);
 		network.addLayer(outputLayer);
 
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < 100; i++) {
 			network.feedForward(getRandomInput());
 			network.backPropagation(randomGenerator.nextDouble());
+			System.out.println(i);
 		}
-		System.out.println(network);
+		System.out.println("done.");
 	}
 
 	private static List<Double> getRandomInput() {

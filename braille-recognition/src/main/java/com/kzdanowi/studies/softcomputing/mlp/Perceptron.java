@@ -14,7 +14,6 @@ import java.util.Random;
  */
 public class Perceptron {
 
-
 	private static final Double LEARNING_RATE = 0.25;
 	private final List<Double> weights;
 	private ActivationFunction activationFunction = new NoActivationFunction();
@@ -41,6 +40,7 @@ public class Perceptron {
 	}
 
 	private void setlastInputsToZero(int inputSize) {
+		lastInputs.clear();
 		for (int i = 0; i < inputSize; i++) {
 			lastInputs.add(0.0);
 		}
