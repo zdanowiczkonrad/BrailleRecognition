@@ -24,7 +24,7 @@ public class DefaultWeightGeneratorTest {
 
 		// then
 		for (int i = 0; i < 100000; i++) {
-			assertThat(generator.next()).isGreaterThanOrEqualTo(-1.).isLessThanOrEqualTo(1);
+			assertThat(generator.next()).isGreaterThanOrEqualTo(-5.).isLessThanOrEqualTo(5);
 		}
 	}
 
