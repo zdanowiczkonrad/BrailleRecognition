@@ -4,21 +4,24 @@
  */
 package com.kzdanowi.studies.softcomputing.mlp.core;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
-import com.kzdanowi.studies.softcomputing.mlp.ActivationFunction;
 import com.kzdanowi.studies.softcomputing.mlp.InputOrWeightSizeException;
+
+
 
 /**
  * Layer class allowing to feed-forward and back-propagate
  */
-public class Layer {
+public class Layer implements Serializable {
 
+	private static final long serialVersionUID = -5842874270448182017L;
+	
 	private ArrayList<Perceptron> perceptrons;
 	
-	public Layer(int perceptronsInLayer, int perceptronInputs,Random randomGenerator, ActivationFunction activationFunction, Double learningRate) {
+	public Layer(int perceptronsInLayer, int perceptronInputs,WeightGenerator randomGenerator, ActivationFunction activationFunction, Double learningRate) {
 		perceptrons = new ArrayList<Perceptron>();	
 		for(int i=0;i<perceptronsInLayer;i++)
 		{
@@ -77,9 +80,4 @@ public class Layer {
 			perceptrons.get(i).updateWeights(error);
 		}
 	}	
-	
-	@Override
-	public String toString() {
-		return "Layer [perceptrons=" + perceptrons + "]";
-	}
 }

@@ -10,6 +10,7 @@ import org.fest.assertions.Delta;
 import org.junit.Test;
 
 import com.kzdanowi.studies.softcomputing.mlp.SigmoidActivationFunction;
+import com.kzdanowi.studies.softcomputing.mlp.core.ActivationFunction;
 
 public class SigmoidActivationFunctionTest {
 

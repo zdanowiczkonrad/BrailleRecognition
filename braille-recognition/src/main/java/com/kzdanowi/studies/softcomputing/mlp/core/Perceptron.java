@@ -4,11 +4,10 @@
  */
 package com.kzdanowi.studies.softcomputing.mlp.core;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
-import com.kzdanowi.studies.softcomputing.mlp.ActivationFunction;
 import com.kzdanowi.studies.softcomputing.mlp.InputOrWeightSizeException;
 import com.kzdanowi.studies.softcomputing.mlp.NoActivationFunction;
 
@@ -16,13 +15,15 @@ import com.kzdanowi.studies.softcomputing.mlp.NoActivationFunction;
  * Class modelling perceptron with multiple inputs, corresponding weights and
  * one output
  */
-public class Perceptron {
+public class Perceptron implements Serializable {
 
+	private static final long serialVersionUID = -8095928609138894921L;
+	
 	private Double learningRate;
 	private final List<Double> weights;
 	private ActivationFunction activationFunction = new NoActivationFunction();
-	private Double lastOutput = 0.0;
-	private List<Double> lastInputs = new ArrayList<Double>();
+	transient private Double lastOutput = 0.0;
+	transient private List<Double> lastInputs = new ArrayList<Double>();
 	private Double bias;
 
 	/**
@@ -42,12 +43,12 @@ public class Perceptron {
 	/**
 	 * Takes number of inputs and random generator
 	 */
-	public Perceptron(int inputSize, final Random randomGenerator) {
+	public Perceptron(int inputSize, final WeightGenerator randomGenerator) {
 		this.weights = new ArrayList<Double>();
 		for (int i = 0; i < inputSize; i++) {
-			weights.add(randomGenerator.nextDouble());
+			weights.add(randomGenerator.next());
 		}
-		bias=randomGenerator.nextDouble();
+		bias=randomGenerator.next();
 	}
 
 
@@ -99,11 +100,6 @@ public class Perceptron {
 			weights.set(i, weights.get(i) + difference);
 		}
 		bias+=learningRate*activationFunction.getPropagationDelta(error, 1.0, lastOutput);
-	}
-
-	@Override
-	public String toString() {
-		return "Perceptron [weights=" + weights + "]\n";
 	}
 
 	public void setLearningRate(Double learningRate) {

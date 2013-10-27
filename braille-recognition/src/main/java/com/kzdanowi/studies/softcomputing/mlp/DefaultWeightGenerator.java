@@ -6,17 +6,21 @@ package com.kzdanowi.studies.softcomputing.mlp;
 
 import java.util.Random;
 
+import com.kzdanowi.studies.softcomputing.mlp.core.WeightGenerator;
+
 /**
  * Adjusted random generator returning random double from (-1,1)
  */
-public class DefaultWeightGenerator extends Random {
+public class DefaultWeightGenerator implements WeightGenerator {
 
-	private static final long serialVersionUID = 6052282608160661294L;
+	private Random random;
 
-	@Override
-	public double nextDouble() {
-		return 1.0-(super.nextDouble()*2.0);
-		//return super.nextDouble();
+	public DefaultWeightGenerator() {
+		this.random=new Random();
+	}
+	public Double next() {
+		return random.nextDouble();
+		//return 1.0-(random.nextDouble()*2.0);
 	}
 
 	

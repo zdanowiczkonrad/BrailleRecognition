@@ -2,10 +2,10 @@
  * @author Konrad Zdanowicz (zdanowicz.konrad@gmail.com)
  * 
  */
-package com.kzdanowi.studies.softcomputing.mlp;
+package com.kzdanowi.studies.softcomputing.mlp.core;
 
 /**
- * 
+ * Constants for MPL
  */
 public class Constants {
 

@@ -11,7 +11,6 @@ import static org.junit.Assert.fail;
 import static org.mockito.Mockito.when;
 
 import java.util.List;
-import java.util.Random;
 
 import org.fest.assertions.Delta;
 import org.junit.After;
@@ -19,8 +18,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import com.kzdanowi.studies.softcomputing.mlp.ActivationFunction;
-import com.kzdanowi.studies.softcomputing.mlp.Constants;
 import com.kzdanowi.studies.softcomputing.mlp.InputOrWeightSizeException;
 import com.kzdanowi.studies.softcomputing.mlp.NoActivationFunction;
 import com.kzdanowi.studies.softcomputing.mlp.SigmoidActivationFunction;
@@ -32,7 +29,7 @@ public class LayerTest {
 
 	private static final int INPUTS = 10;
 	private static final int PERCEPTRONS = 100;
-	private final Random randomGenerator = Mockito.mock(Random.class);
+	private final WeightGenerator mockWeightGenerator = Mockito.mock(WeightGenerator.class);
 	private final ActivationFunction activationFunction = new SigmoidActivationFunction();
 
 	@Before
@@ -48,7 +45,7 @@ public class LayerTest {
 		// given
 
 		// when
-		Layer layer = new Layer(PERCEPTRONS, 0, randomGenerator, activationFunction, Constants.DEFAULT_LEARNING_RATE);
+		Layer layer = new Layer(PERCEPTRONS, 0, mockWeightGenerator, activationFunction, Constants.DEFAULT_LEARNING_RATE);
 
 		// then
 		assertThat(layer.getPerceptrons()).isNotNull();
@@ -61,7 +58,7 @@ public class LayerTest {
 		// given
 
 		// when
-		Layer layer = new Layer(PERCEPTRONS, INPUTS, randomGenerator, activationFunction, Constants.DEFAULT_LEARNING_RATE);
+		Layer layer = new Layer(PERCEPTRONS, INPUTS, mockWeightGenerator, activationFunction, Constants.DEFAULT_LEARNING_RATE);
 
 		// then
 		for (Perceptron each : layer.getPerceptrons()) {
@@ -72,8 +69,8 @@ public class LayerTest {
 	@Test
 	public void shouldOutputZeroForZeroInputAndWeights() throws InputOrWeightSizeException {
 		// given
-		when(randomGenerator.nextDouble()).thenReturn(0.0);
-		Layer layer = new Layer(PERCEPTRONS, INPUTS, randomGenerator, new NoActivationFunction(), Constants.DEFAULT_LEARNING_RATE);
+		when(mockWeightGenerator.next()).thenReturn(0.0);
+		Layer layer = new Layer(PERCEPTRONS, INPUTS, mockWeightGenerator, new NoActivationFunction(), Constants.DEFAULT_LEARNING_RATE);
 
 		// when
 		List<Double> output = layer.feedForward(newArrayList(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0));
@@ -94,8 +91,8 @@ public class LayerTest {
 		 */
 
 		// given
-		when(randomGenerator.nextDouble()).thenReturn(0.62).thenReturn(0.55).thenReturn(0.).thenReturn(0.42).thenReturn(-0.17).thenReturn(0.);
-		Layer layer = new Layer(2, 2, randomGenerator, activationFunction, Constants.DEFAULT_LEARNING_RATE);
+		when(mockWeightGenerator.next()).thenReturn(0.62).thenReturn(0.55).thenReturn(0.).thenReturn(0.42).thenReturn(-0.17).thenReturn(0.);
+		Layer layer = new Layer(2, 2, mockWeightGenerator, activationFunction, Constants.DEFAULT_LEARNING_RATE);
 
 		// when
 		List<Double> actual = layer.feedForward(newArrayList(0.0, 1.0));
@@ -113,8 +110,8 @@ public class LayerTest {
 		 */
 
 		// given
-		when(randomGenerator.nextDouble()).thenReturn(0.35).thenReturn(0.81).thenReturn(0.);
-		Layer layer = new Layer(1, 2, randomGenerator, activationFunction, Constants.DEFAULT_LEARNING_RATE);
+		when(mockWeightGenerator.next()).thenReturn(0.35).thenReturn(0.81).thenReturn(0.);
+		Layer layer = new Layer(1, 2, mockWeightGenerator, activationFunction, Constants.DEFAULT_LEARNING_RATE);
 
 		// when
 		List<Double> actual = layer.feedForward(newArrayList(0.634135591, 0.457602059));
@@ -132,8 +129,8 @@ public class LayerTest {
 		 */
 
 		// given
-		when(randomGenerator.nextDouble()).thenReturn(0.35).thenReturn(0.81).thenReturn(0.);
-		Layer layer = new Layer(1, 2, randomGenerator, activationFunction, Constants.DEFAULT_LEARNING_RATE);
+		when(mockWeightGenerator.next()).thenReturn(0.35).thenReturn(0.81).thenReturn(0.);
+		Layer layer = new Layer(1, 2, mockWeightGenerator, activationFunction, Constants.DEFAULT_LEARNING_RATE);
 
 		// when
 		List<Double> calculated = layer.feedForward(newArrayList(0.634135591, 0.457602059));

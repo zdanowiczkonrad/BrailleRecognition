@@ -4,10 +4,14 @@
  */
 package com.kzdanowi.studies.softcomputing.mlp;
 
+import com.kzdanowi.studies.softcomputing.mlp.core.ActivationFunction;
+
 /**
  * Sigmoid activation function implementation
  */
 public class SigmoidActivationFunction implements ActivationFunction {
+
+	private static final long serialVersionUID = 1887608595542939363L;
 
 	public Double activate(Double input) {
 		return 1 / (1 + Math.exp(-input));

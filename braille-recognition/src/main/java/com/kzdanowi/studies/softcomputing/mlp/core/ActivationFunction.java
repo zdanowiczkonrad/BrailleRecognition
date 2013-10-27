@@ -2,12 +2,11 @@
  * @author Konrad Zdanowicz (zdanowicz.konrad@gmail.com)
  * 
  */
-package com.kzdanowi.studies.softcomputing.mlp;
+package com.kzdanowi.studies.softcomputing.mlp.core;
 
-/**
- * 
- */
-public interface ActivationFunction {
+import java.io.Serializable;
+
+public interface ActivationFunction extends Serializable {
 
 	Double activate(Double input);
 

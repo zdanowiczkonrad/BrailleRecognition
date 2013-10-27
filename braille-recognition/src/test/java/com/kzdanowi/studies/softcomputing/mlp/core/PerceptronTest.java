@@ -7,7 +7,6 @@ import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import org.fest.assertions.Delta;
 import org.junit.Rule;
@@ -15,14 +14,8 @@ import org.junit.Test;
 import org.junit.matchers.JUnitMatchers;
 import org.junit.rules.ExpectedException;
 
-import com.kzdanowi.studies.softcomputing.mlp.ActivationFunction;
 import com.kzdanowi.studies.softcomputing.mlp.InputOrWeightSizeException;
 import com.kzdanowi.studies.softcomputing.mlp.SigmoidActivationFunction;
-import com.kzdanowi.studies.softcomputing.mlp.SignumActivationFunction;
-
-import com.kzdanowi.studies.softcomputing.mlp.core.Perceptron;
-
-
 
 public class PerceptronTest {
 
@@ -31,7 +24,7 @@ public class PerceptronTest {
 		// given
 		List<Double> weights = newArrayList();
 
-		// when
+		// when 
 		Perceptron perceptron = new Perceptron(weights);
 
 		// then
@@ -100,31 +93,15 @@ public class PerceptronTest {
 		perceptron.feedForward(inputs);
 	}
 	
-	@Test
-	public void shouldReturnOutputBasedOnSignumActivationFunction() throws Exception {
-		// given
-		ActivationFunction signumActivationFunction = new SignumActivationFunction();
-
-		List<Double> inputs = newArrayList(1.0);
-		Perceptron perceptron = new Perceptron(newArrayList(0.5));
-		perceptron.setActivationFunction(signumActivationFunction);
-		perceptron.setBias(0.);
-		
-		// when
-		Double output = perceptron.feedForward(inputs);
-		
-		// then
-		assertThat(output).isEqualTo(1.0);
-	}
 	
 	@Test
 	public void shouldRandomizeWeightsAndCountEquivalentOutput() throws Exception {
 		// given
-		Random randomGeneratorMock = mock(Random.class);
-		when(randomGeneratorMock.nextDouble()).thenReturn(0.1).thenReturn(0.2).thenReturn(0.3).thenReturn(0.);
+		WeightGenerator mockWeightGenerator = mock(WeightGenerator.class);
+		when(mockWeightGenerator.next()).thenReturn(0.1).thenReturn(0.2).thenReturn(0.3).thenReturn(0.);
 		
 		ArrayList<Double> inputs = newArrayList(1.0,2.0,3.0);
-		Perceptron perceptron = new Perceptron(3,randomGeneratorMock);
+		Perceptron perceptron = new Perceptron(3,mockWeightGenerator);
 		
 		// when
 		Double output = perceptron.feedForward(inputs);
