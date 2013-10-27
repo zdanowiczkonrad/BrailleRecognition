@@ -19,6 +19,7 @@ public class SigmoidActivationFunctionTest {
 		ActivationFunction activationFunction = new SigmoidActivationFunction();
 
 		// then
-		assertThat(activationFunction.activate(0.5)).isEqualTo(Double.valueOf(0.6224),Delta.delta(0.0001));
+		assertThat(activationFunction.activate(0.5)).isEqualTo(Double.valueOf(0.6224), Delta.delta(0.0001));
 	}
+
 }

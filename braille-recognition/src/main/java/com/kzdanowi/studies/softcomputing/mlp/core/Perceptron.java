@@ -2,11 +2,15 @@
  * @author Konrad Zdanowicz (zdanowicz.konrad@gmail.com)
  * 
  */
-package com.kzdanowi.studies.softcomputing.mlp;
+package com.kzdanowi.studies.softcomputing.mlp.core;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import com.kzdanowi.studies.softcomputing.mlp.ActivationFunction;
+import com.kzdanowi.studies.softcomputing.mlp.InputOrWeightSizeException;
+import com.kzdanowi.studies.softcomputing.mlp.NoActivationFunction;
 
 /**
  * Class modelling perceptron with multiple inputs, corresponding weights and
@@ -14,20 +18,27 @@ import java.util.Random;
  */
 public class Perceptron {
 
-	private static final Double LEARNING_RATE = 0.25;
+	private Double learningRate;
 	private final List<Double> weights;
 	private ActivationFunction activationFunction = new NoActivationFunction();
 	private Double lastOutput = 0.0;
 	private List<Double> lastInputs = new ArrayList<Double>();
+	private Double bias;
 
 	/**
 	 * Test constructor taking weights instead of autogenerating them
 	 */
 	public Perceptron(final List<Double> weights) {
 		this.weights = weights;
-		setlastInputsToZero(weights.size());
 	}
 
+	/**
+	 * Sets bias weight
+	 */
+	public void setBias(Double bias)
+	{
+		this.bias=bias;
+	}
 	/**
 	 * Takes number of inputs and random generator
 	 */
@@ -36,22 +47,15 @@ public class Perceptron {
 		for (int i = 0; i < inputSize; i++) {
 			weights.add(randomGenerator.nextDouble());
 		}
-		setlastInputsToZero(inputSize);
+		bias=randomGenerator.nextDouble();
 	}
 
-	private void setlastInputsToZero(int inputSize) {
-		lastInputs.clear();
-		for (int i = 0; i < inputSize; i++) {
-			lastInputs.add(0.0);
-		}
-	}
 
 	/**
 	 * Set activation function that is going to be used by the perceptron
 	 */
 	public void setActivationFunction(final ActivationFunction activationFunction) {
 		this.activationFunction = activationFunction;
-
 	}
 
 	/**
@@ -65,8 +69,10 @@ public class Perceptron {
 		lastInputs = inputs;
 
 		for (int i = 0; i < inputs.size(); i++) {
-			output += inputs.get(i) * weights.get(i);
+			output = output + inputs.get(i) * weights.get(i);
 		}
+		
+		output+=1*bias;
 
 		lastOutput = activationFunction.activate(output);
 		return lastOutput;
@@ -89,13 +95,18 @@ public class Perceptron {
 
 	public void updateWeights(Double error) {
 		for (int i = 0; i < weights.size(); i++) {
-			Double difference = LEARNING_RATE * activationFunction.getPropagationDelta(error, lastInputs.get(i), lastOutput);
+			Double difference = learningRate * activationFunction.getPropagationDelta(error, lastInputs.get(i), lastOutput);
 			weights.set(i, weights.get(i) + difference);
 		}
+		bias+=learningRate*activationFunction.getPropagationDelta(error, 1.0, lastOutput);
 	}
 
 	@Override
 	public String toString() {
 		return "Perceptron [weights=" + weights + "]\n";
+	}
+
+	public void setLearningRate(Double learningRate) {
+		this.learningRate=learningRate;
 	}
 }

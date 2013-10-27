@@ -14,7 +14,8 @@ public class SigmoidActivationFunction implements ActivationFunction {
 	}
 
 	public Double getPropagationDelta(Double error, Double lastInput, Double lastOutput) {
-		return error * lastInput * lastOutput * (1 - lastOutput);
+
+		return error * lastInput * lastOutput * (1.0 - lastOutput);
 	}
 
 }

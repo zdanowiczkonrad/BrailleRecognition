@@ -1,4 +1,4 @@
-package com.kzdanowi.studies.softcomputing.mlp;
+package com.kzdanowi.studies.softcomputing.mlp.core;
 
 import static com.google.common.collect.Lists.newArrayList;
 import static org.fest.assertions.Assertions.assertThat;
@@ -14,6 +14,13 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.matchers.JUnitMatchers;
 import org.junit.rules.ExpectedException;
+
+import com.kzdanowi.studies.softcomputing.mlp.ActivationFunction;
+import com.kzdanowi.studies.softcomputing.mlp.InputOrWeightSizeException;
+import com.kzdanowi.studies.softcomputing.mlp.SigmoidActivationFunction;
+import com.kzdanowi.studies.softcomputing.mlp.SignumActivationFunction;
+
+import com.kzdanowi.studies.softcomputing.mlp.core.Perceptron;
 
 
 
@@ -37,7 +44,8 @@ public class PerceptronTest {
 		List<Double> inputs = newArrayList(1.0);
 		List<Double> weights = inputs;
 		Perceptron perceptron = new Perceptron(weights);
-
+		perceptron.setBias(0.);
+		
 		// when
 		Double output = perceptron.feedForward(inputs);
 		
@@ -51,7 +59,7 @@ public class PerceptronTest {
 		List<Double> inputs = newArrayList(1.0,2.0);
 		List<Double> weights = newArrayList(0.5,-0.25);
 		Perceptron perceptron = new Perceptron(weights);
-
+		perceptron.setBias(0.);
 		// when
 		Double output = perceptron.feedForward(inputs);
 		
@@ -100,6 +108,7 @@ public class PerceptronTest {
 		List<Double> inputs = newArrayList(1.0);
 		Perceptron perceptron = new Perceptron(newArrayList(0.5));
 		perceptron.setActivationFunction(signumActivationFunction);
+		perceptron.setBias(0.);
 		
 		// when
 		Double output = perceptron.feedForward(inputs);
@@ -112,7 +121,7 @@ public class PerceptronTest {
 	public void shouldRandomizeWeightsAndCountEquivalentOutput() throws Exception {
 		// given
 		Random randomGeneratorMock = mock(Random.class);
-		when(randomGeneratorMock.nextDouble()).thenReturn(0.1).thenReturn(0.2).thenReturn(0.3);
+		when(randomGeneratorMock.nextDouble()).thenReturn(0.1).thenReturn(0.2).thenReturn(0.3).thenReturn(0.);
 		
 		ArrayList<Double> inputs = newArrayList(1.0,2.0,3.0);
 		Perceptron perceptron = new Perceptron(3,randomGeneratorMock);
@@ -137,7 +146,10 @@ public class PerceptronTest {
 		Perceptron perceptron2=new Perceptron(newArrayList(0.42,-0.17));
 		
 		perceptron1.setActivationFunction(new SigmoidActivationFunction());
+		perceptron1.setBias(0.0);
+
 		perceptron2.setActivationFunction(new SigmoidActivationFunction());
+		perceptron2.setBias(0.0);
 		
 		// when
 		Double output1=perceptron1.feedForward(newArrayList(0.0,1.0));

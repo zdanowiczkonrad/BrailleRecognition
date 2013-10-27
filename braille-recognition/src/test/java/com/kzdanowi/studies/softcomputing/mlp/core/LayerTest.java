@@ -2,7 +2,7 @@
  * @author Konrad Zdanowicz (zdanowicz.konrad@gmail.com)
  * 
  */
-package com.kzdanowi.studies.softcomputing.mlp;
+package com.kzdanowi.studies.softcomputing.mlp.core;
 
 import static com.google.common.collect.Lists.newArrayList;
 import static org.fest.assertions.Assertions.assertThat;
@@ -18,6 +18,12 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
+
+import com.kzdanowi.studies.softcomputing.mlp.ActivationFunction;
+import com.kzdanowi.studies.softcomputing.mlp.Constants;
+import com.kzdanowi.studies.softcomputing.mlp.InputOrWeightSizeException;
+import com.kzdanowi.studies.softcomputing.mlp.NoActivationFunction;
+import com.kzdanowi.studies.softcomputing.mlp.SigmoidActivationFunction;
 
 /**
  * Test for layer class
@@ -42,7 +48,7 @@ public class LayerTest {
 		// given
 
 		// when
-		Layer layer = new Layer(PERCEPTRONS, 0, randomGenerator, activationFunction);
+		Layer layer = new Layer(PERCEPTRONS, 0, randomGenerator, activationFunction, Constants.DEFAULT_LEARNING_RATE);
 
 		// then
 		assertThat(layer.getPerceptrons()).isNotNull();
@@ -55,7 +61,7 @@ public class LayerTest {
 		// given
 
 		// when
-		Layer layer = new Layer(PERCEPTRONS, INPUTS, randomGenerator, activationFunction);
+		Layer layer = new Layer(PERCEPTRONS, INPUTS, randomGenerator, activationFunction, Constants.DEFAULT_LEARNING_RATE);
 
 		// then
 		for (Perceptron each : layer.getPerceptrons()) {
@@ -67,7 +73,7 @@ public class LayerTest {
 	public void shouldOutputZeroForZeroInputAndWeights() throws InputOrWeightSizeException {
 		// given
 		when(randomGenerator.nextDouble()).thenReturn(0.0);
-		Layer layer = new Layer(PERCEPTRONS, INPUTS, randomGenerator, new NoActivationFunction());
+		Layer layer = new Layer(PERCEPTRONS, INPUTS, randomGenerator, new NoActivationFunction(), Constants.DEFAULT_LEARNING_RATE);
 
 		// when
 		List<Double> output = layer.feedForward(newArrayList(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0));
@@ -88,8 +94,8 @@ public class LayerTest {
 		 */
 
 		// given
-		when(randomGenerator.nextDouble()).thenReturn(0.62).thenReturn(0.55).thenReturn(0.42).thenReturn(-0.17);
-		Layer layer = new Layer(2, 2, randomGenerator, activationFunction);
+		when(randomGenerator.nextDouble()).thenReturn(0.62).thenReturn(0.55).thenReturn(0.).thenReturn(0.42).thenReturn(-0.17).thenReturn(0.);
+		Layer layer = new Layer(2, 2, randomGenerator, activationFunction, Constants.DEFAULT_LEARNING_RATE);
 
 		// when
 		List<Double> actual = layer.feedForward(newArrayList(0.0, 1.0));
@@ -107,8 +113,8 @@ public class LayerTest {
 		 */
 
 		// given
-		when(randomGenerator.nextDouble()).thenReturn(0.35).thenReturn(0.81);
-		Layer layer = new Layer(1, 2, randomGenerator, activationFunction);
+		when(randomGenerator.nextDouble()).thenReturn(0.35).thenReturn(0.81).thenReturn(0.);
+		Layer layer = new Layer(1, 2, randomGenerator, activationFunction, Constants.DEFAULT_LEARNING_RATE);
 
 		// when
 		List<Double> actual = layer.feedForward(newArrayList(0.634135591, 0.457602059));
@@ -126,13 +132,14 @@ public class LayerTest {
 		 */
 
 		// given
-		when(randomGenerator.nextDouble()).thenReturn(0.35).thenReturn(0.81);
-		Layer layer = new Layer(1, 2, randomGenerator, activationFunction);
-		Double error = -0.643962658;
+		when(randomGenerator.nextDouble()).thenReturn(0.35).thenReturn(0.81).thenReturn(0.);
+		Layer layer = new Layer(1, 2, randomGenerator, activationFunction, Constants.DEFAULT_LEARNING_RATE);
 
 		// when
-		layer.feedForward(newArrayList(0.634135591, 0.457602059));
-		layer.backPropagate(error);
+		List<Double> calculated = layer.feedForward(newArrayList(0.634135591, 0.457602059));
+		List<Double> error;
+		error = newArrayList(0.0 - calculated.get(0));
+		layer.backPropagateEach(error);
 		List<List<Double>> weights = layer.getWeights();
 
 		// then
