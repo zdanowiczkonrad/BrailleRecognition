@@ -25,19 +25,18 @@ import com.kzdanowi.studies.softcomputing.mlp.core.WeightGenerator;
 public class App {
 
 	public static void main(String[] args) {
-		//Network network = createNetwork(2, 4, 1);
+		Network network = createNetwork(2, 4, 1);
 		
-
 		String path = "/networks/net_XOR.bin";
 
 		List<List<Double>> in = generateXorInputs();
 		List<List<Double>> out = generateXorOutputs();
-		Network network = Network.deserializeNetworkFrom(path);
+		//Network network = Network.deserializeNetworkFrom(path);
 
 		TrainRunner runner = new TrainRunner(new Trainer(network));
 
 		System.out.println("Training starts.");
-		List<Double> run = runner.run(in, out, 0.01);
+		List<Double> run = runner.run(in, out, 0.001);
 		System.out.println("Training ended. Epochs=" + run.size() + ". Now testing:");
 
 		for (List<Double> each : in) {
@@ -74,7 +73,7 @@ public class App {
 		WeightGenerator randomGenerator = new DefaultWeightGenerator();
 		SigmoidActivationFunction activationFunction = new SigmoidActivationFunction();
 
-		Double learningRate = 0.8;
+		Double learningRate = 0.25;
 
 		Layer hiddenLayer = new Layer(hiddenNeurons, inputs, randomGenerator, activationFunction, learningRate);
 		Layer outputLayer = new Layer(outputs, hiddenNeurons, randomGenerator, activationFunction, learningRate);

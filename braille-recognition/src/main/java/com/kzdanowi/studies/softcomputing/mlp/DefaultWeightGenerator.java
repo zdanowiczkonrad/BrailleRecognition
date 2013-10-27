@@ -4,23 +4,19 @@
  */
 package com.kzdanowi.studies.softcomputing.mlp;
 
-import java.util.Random;
-
 import com.kzdanowi.studies.softcomputing.mlp.core.WeightGenerator;
 
 /**
- * Adjusted random generator returning random double from (-1,1)
+ * Adjusted random generator returning random double from (-100,100)
  */
 public class DefaultWeightGenerator implements WeightGenerator {
 
-	private Random random;
 
 	public DefaultWeightGenerator() {
-		this.random=new Random();
 	}
 	public Double next() {
-		return random.nextDouble();
-		//return 1.0-(random.nextDouble()*2.0);
+		//return random.nextDouble();
+		return (Math.random()*10)-5;
 	}
 
 	
