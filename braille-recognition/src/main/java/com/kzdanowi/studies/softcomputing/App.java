@@ -24,7 +24,7 @@ import com.kzdanowi.studies.softcomputing.mlp.core.WeightGenerator;
  */
 public class App {
 
-	public static void main(String[] args) {
+	public static void mains(String[] args) {
 		Network network = createNetwork(2, 3, 1);
 		
 

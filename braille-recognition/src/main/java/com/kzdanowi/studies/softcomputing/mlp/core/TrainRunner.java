@@ -16,7 +16,7 @@ public class TrainRunner {
 
 	public Trainer trainer;
 	public int sysoutInterval=0;
-	private int howOftenSysout=10000;
+	private int howOftenSysout=20;
 	
 	public TrainRunner(Trainer trainer) {
 		this.trainer = trainer;
@@ -40,7 +40,7 @@ public class TrainRunner {
 			
 			if(sysoutInterval%howOftenSysout==0)
 			{
-				System.out.println(String.format("for input %s expected: %s, actual: %s,",input,expected,actual));
+				System.out.println(String.format("Expected: %s, actual: %s,",expected,actual));
 			}
 			
 			netError += trainer.getNetError(trainer.getError(expected, actual));
