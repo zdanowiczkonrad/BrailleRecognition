@@ -27,7 +27,6 @@ public class App {
 	public static void mains(String[] args) {
 		Network network = createNetwork(2, 3, 1);
 		
-
 		List<List<Double>> in = generateXorInputs();
 		List<List<Double>> out = generateXorOutputs();
 

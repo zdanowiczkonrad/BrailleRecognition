@@ -21,6 +21,7 @@ public class LettersDataset {
 	private List<List<Double>> cachedInputs;
 	private List<List<Double>> cachedOutputs;
 
+	
 	public List<Double> getLetter(String letter) throws IOException {
 		return Doubles.asList(ImageReader.getImage("src/main/java/com/kzdanowi/studies/softcomputing/inputs/data/" + letter
 				+ ".jpg"));

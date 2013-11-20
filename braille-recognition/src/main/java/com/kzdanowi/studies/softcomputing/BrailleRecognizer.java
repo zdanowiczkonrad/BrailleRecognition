@@ -16,6 +16,23 @@ public class BrailleRecognizer {
 
 	public static void main(String[] args) throws IOException {
 		
+		String path = "/networks/net_Braille.bin"; 
+		Network network = Network.deserializeNetworkFrom(path);
+		
+		LettersDataset dataset = new LettersDataset();
+		
+		List<List<Double>> in = dataset.getInputs();
+		//List<List<Double>> out = dataset.getOutputs();
+		
+		System.out.println("Testing of dissorted images starting:");
+		
+		for (List<Double> each : in) {
+			System.out.println(each);
+			System.out.println(network.feedForward(each));
+		}
+		
+		
+		/*
 		Network network = createNetwork(256, 50, 1);
 
 		LettersDataset dataset = new LettersDataset();
@@ -26,7 +43,7 @@ public class BrailleRecognizer {
 		TrainRunner runner = new TrainRunner(new Trainer(network));
 
 		System.out.println("Training starts.");
-		List<Double> run = runner.run(in, out, 0.0001);
+		List<Double> run = runner.run(in, out, 0.001);
 		
 		System.out.println("Training ended. Epochs=" + run.size() + ". Now testing:");
 
@@ -40,7 +57,7 @@ public class BrailleRecognizer {
 		Network.serializeNetwork(network, path);
 		
 		System.out.println("Net saved to file " + path);
-
+		 */
 	}
 
 	private static Network createNetwork(int inputs, int hiddenNeurons, int outputs) {
