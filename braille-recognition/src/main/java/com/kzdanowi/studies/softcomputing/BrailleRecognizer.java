@@ -22,13 +22,23 @@ public class BrailleRecognizer {
 		LettersDataset dataset = new LettersDataset();
 		
 		List<List<Double>> in = dataset.getInputs();
+		//List<List<Double>> in2 = dataset.getVerticallyRemovedInputs();
+		//List<List<Double>> in3 = dataset.getHorizontallyRemovedInputs();
+		List<List<Double>> in4 = dataset.getWhiteNoisedInputs();
 		//List<List<Double>> out = dataset.getOutputs();
 		
-		System.out.println("Testing of dissorted images starting:");
-		
+		System.out.println("Testing of distorted images starts:");
+
 		for (List<Double> each : in) {
 			System.out.println(each);
-			System.out.println(network.feedForward(each));
+			System.out.println(dataset.valueOf(network.feedForward(each).get(0)));
+		}
+		
+			System.out.println("After applying WHITE NOISE");
+	
+		for (List<Double> each : in4) {
+			System.out.println(each);
+			System.out.println(dataset.valueOf(network.feedForward(each).get(0)));
 		}
 		
 		
@@ -60,6 +70,7 @@ public class BrailleRecognizer {
 		 */
 	}
 
+	@SuppressWarnings("unused")
 	private static Network createNetwork(int inputs, int hiddenNeurons, int outputs) {
 		Network network = new Network();
 
