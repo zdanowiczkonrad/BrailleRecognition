@@ -18,8 +18,12 @@ public class BrailleRecognizer {
 		List<List<Double>> out = dataset.getOutputs();
 		Trainer trainer = new MultiOutputTrainer(256, 100, 26, 0.2);
 		TrainRunner runner = new TrainRunner(trainer);
-		// comment this if run for the first time
-		trainer.loadFromPath("/network/multioutput_braille.bin");
+		try {
+			trainer.loadFromPath("/network/multioutput_braille.bin");
+		} catch(Exception e)
+		{
+			System.out.println("Could not load network. The network is being trained.");
+		}
 
 		System.out.println("Training starts.");
 		List<Double> run = runner.run(in, out, 0.01);
