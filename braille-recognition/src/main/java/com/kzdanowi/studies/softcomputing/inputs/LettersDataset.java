@@ -115,7 +115,8 @@ public class LettersDataset {
 
 		for (String letter : ALPHABET_LETTERS) {
 			cachedDistortedInputsVR.add(getVerticallyRemovedLetter(letter));
-			cachedDistortedInputsVR.add(getVerticallyRemovedLetter(letter + "2"));
+			cachedDistortedInputsVR
+					.add(getVerticallyRemovedLetter(letter + "2"));
 		}
 	}
 
@@ -124,7 +125,8 @@ public class LettersDataset {
 
 		for (String letter : ALPHABET_LETTERS) {
 			cachedDistortedInputsHR.add(getHorizontallyRemovedLetter(letter));
-			cachedDistortedInputsHR.add(getHorizontallyRemovedLetter(letter + "2"));
+			cachedDistortedInputsHR.add(getHorizontallyRemovedLetter(letter
+					+ "2"));
 		}
 	}
 

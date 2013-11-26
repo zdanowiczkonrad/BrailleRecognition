@@ -98,10 +98,18 @@ public class ImageReader {
 	}
 
 	private static void addWhiteNoise(double[] toReturn) {
+		double noiseDensity = 0.2; // % of how how many pixels should be noised;
+									// 0.2=20%
 		for (int i = 0; i < toReturn.length; i++) {
-			toReturn[i] = 1. - toReturn[i]; // returns the opposite color
+			if (java.lang.Math.random() <= noiseDensity) { // if the random
+															// value from range
+															// <0,1) is less
+															// than noise
+															// density, then add
+															// noise for pixel
+				toReturn[i] = 1. - toReturn[i]; // returns the opposite color
+			}
 		}
-
 	}
 
 	private static void HorizontalPartRemoval(double[] toReturn) {
