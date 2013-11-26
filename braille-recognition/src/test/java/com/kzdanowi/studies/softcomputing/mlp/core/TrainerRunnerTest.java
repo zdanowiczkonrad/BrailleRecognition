@@ -22,13 +22,13 @@ import org.junit.Test;
 public class TrainerRunnerTest {
 
 	private TrainRunner runner;
-	private Trainer trainerMock;
+	private SingleOutputTrainer trainerMock;
 	private List<List<Double>> inputs;
 	private List<List<Double>> outputs;
 
 	@Before
 	public void setUp() {
-		trainerMock = mock(Trainer.class);
+		trainerMock = mock(SingleOutputTrainer.class);
 		runner = new TrainRunner(trainerMock);
 
 		inputs = new ArrayList<List<Double>>();

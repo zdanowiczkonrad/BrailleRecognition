@@ -23,7 +23,8 @@ public class DefaultWeightGenerator implements WeightGenerator {
 	}
 
 	public Double next() {
-		return (Math.random() * (to-from)) +from;
+		double nextRand = (Math.random() * (to-from)) +from;
+		return nextRand;
 	}
 
 }

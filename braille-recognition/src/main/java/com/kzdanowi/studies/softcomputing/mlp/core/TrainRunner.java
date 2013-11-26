@@ -16,7 +16,7 @@ public class TrainRunner {
 
 	public Trainer trainer;
 	public int sysoutInterval=0;
-	private int howOftenSysout=20;
+	private int howOftenSysout=100;
 	
 	public TrainRunner(Trainer trainer) {
 		this.trainer = trainer;
@@ -49,6 +49,9 @@ public class TrainRunner {
 		if(sysoutInterval%howOftenSysout==0)
 		{
 			System.out.println(" *    MSE: "+netError);
+			String path = "/networks/net_Braille_snapshot.bin";
+			GenericMultiLayerNetwork.serializeNetwork(trainer.getNetwork(), path);
+
 		}
 	
 		return netError;

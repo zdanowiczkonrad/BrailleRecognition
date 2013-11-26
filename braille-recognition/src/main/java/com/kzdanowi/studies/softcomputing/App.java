@@ -7,10 +7,11 @@ import java.util.List;
 
 import com.kzdanowi.studies.softcomputing.mlp.DefaultWeightGenerator;
 import com.kzdanowi.studies.softcomputing.mlp.SigmoidActivationFunction;
-import com.kzdanowi.studies.softcomputing.mlp.core.Layer;
 import com.kzdanowi.studies.softcomputing.mlp.core.Network;
+import com.kzdanowi.studies.softcomputing.mlp.core.Layer;
+import com.kzdanowi.studies.softcomputing.mlp.core.GenericMultiLayerNetwork;
 import com.kzdanowi.studies.softcomputing.mlp.core.TrainRunner;
-import com.kzdanowi.studies.softcomputing.mlp.core.Trainer;
+import com.kzdanowi.studies.softcomputing.mlp.core.SingleOutputTrainer;
 import com.kzdanowi.studies.softcomputing.mlp.core.WeightGenerator;
 
 /**
@@ -31,7 +32,7 @@ public class App {
 		List<List<Double>> in = generateXorInputs();
 		List<List<Double>> out = generateXorOutputs();
 
-		TrainRunner runner = new TrainRunner(new Trainer(network));
+		TrainRunner runner = new TrainRunner(new SingleOutputTrainer(network));
 
 		System.out.println("Training starts.");
 		List<Double> run = runner.run(in, out, 0.001);
@@ -43,7 +44,7 @@ public class App {
 		}
 
 		String path = "/networks/net_XOR.bin";
-		Network.serializeNetwork(network, path);
+		GenericMultiLayerNetwork.serializeNetwork(network, path);
 		System.out.println("Net saved to file " + path);
 
 	}
@@ -67,7 +68,7 @@ public class App {
 	}
 
 	private static Network createNetwork(int inputs, int hiddenNeurons, int outputs) {
-		Network network = new Network();
+		GenericMultiLayerNetwork network = new GenericMultiLayerNetwork();
 
 		WeightGenerator randomGenerator = new DefaultWeightGenerator(-5.,5.);
 		SigmoidActivationFunction activationFunction = new SigmoidActivationFunction();

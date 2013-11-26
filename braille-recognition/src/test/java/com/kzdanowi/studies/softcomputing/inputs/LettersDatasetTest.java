@@ -11,6 +11,7 @@ import java.util.List;
 
 import org.fest.assertions.Condition;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class LettersDatasetTest {
@@ -84,6 +85,7 @@ public class LettersDatasetTest {
 	}
 
 	@Test
+	@Ignore
 	public void normalizedOutputShouldBeProperlyTranslatedToLetters() {
 		
 		// given
